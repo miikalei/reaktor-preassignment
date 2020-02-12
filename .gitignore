@@ -9,7 +9,8 @@
 /coverage
 
 # production
-/build
+# Now commented in order to try pushing local build to Heroku instead of building there
+#/build
 
 # misc
 .DS_Store

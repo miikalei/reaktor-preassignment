@@ -1,0 +1,2 @@
+(this["webpackJsonpreaktor-preassignment"]=this["webpackJsonpreaktor-preassignment"]||[]).push([[0],[,,,function(e,n,t){e.exports=t(10)},,,,,function(e,n,t){},function(e,n,t){},function(e,n,t){"use strict";t.r(n);var r=t(0),a=t.n(r),s=t(2),i=t.n(s);t(8),t(9);var o=function(){return a.a.createElement("div",{className:"App"},"Heip\xe4 hei")};i.a.render(a.a.createElement(o,null),document.getElementById("root"))}],[[3,1,2]]]);
+//# sourceMappingURL=main.b0c1007b.chunk.js.map
