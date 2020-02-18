@@ -2,29 +2,34 @@ import React, { useState } from 'react';
 
 import './App.css';
 
+import parseText from './parser.js'
+
 function App() {
-  const [ textData, setTextData ] = useState("Default text")
+  const [ packageData, setPackageData ] = useState([])
 
-  const loadDefaultFile = () => {
-    fetch('/data/defaultdata')
-      .then((r) => r.text())
-      .then((data) => setTextData(data))
-  }
-
-  const loadCustomFile = (file) => {
-    const reader = new FileReader()
-    reader.onload = (event) => {
-      setTextData(event.target.result)
+  const loadFile = (file) => {
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = (event) => setPackageData(parseText(event.target.result))
+      reader.readAsText(file)
+    } else {
+      fetch('/data/defaultdata')
+        .then((r) => r.text())
+        .then((data) => setPackageData(parseText(data)))
     }
-    reader.readAsText(file)
   }
 
   return (
     <div className="App">
-      <input type="file" onChange={(event) => loadCustomFile(event.target.files[0])}/>
-      <button onClick={ () => loadDefaultFile() }>Load default file</button>
+      <input type="file" onChange={(event) => loadFile(event.target.files[0])}/>
+      <button onClick={ () => loadFile() }>Load default file</button>
       <div id="textarea">
-        { textData }
+        { packageData.map(packageObject => <p key={packageObject.package}>
+          Name: {packageObject.package}<br/>
+          Description: {packageObject.descriptionHeader}<br/>
+          Descriptiondetails: {packageObject.descriptionDetails}<br/>
+          Dependencies: {packageObject.dependencyList.length}
+          </p>) }
       </div>
     </div>
   );
