@@ -29,7 +29,7 @@ const parseText = (textData) => {
     let dependencyList = []
     if (dependences) {
       // Remove version numbers
-      dependencyList = dependences[1].trim().replace(/\(.*\)/,'').split(',')
+      dependencyList = dependences[1].trim().replace(/\([^)]*\)/g,'').split(',')
       // List alternatives as an array
       dependencyList = dependencyList.map(dependency => dependency.split('|').map(string => string.trim()))
     }
