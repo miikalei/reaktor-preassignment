@@ -1,4 +1,11 @@
 .App {
   text-align: left;
   white-space: pre-line;
+  height: 100%;
+}
+
+.CustomList {
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
 }
