@@ -6,7 +6,9 @@ import parseText from './parser.js'
 
 function App() {
   const [ packageData, setPackageData ] = useState([])
-  
+  const packageNameList =  packageData.map(packageObject => packageObject.package)
+
+
   const loadFile = (file) => {
     if (file) {
       const reader = new FileReader()
@@ -17,6 +19,12 @@ function App() {
         .then((r) => r.text())
         .then((data) => setPackageData(parseText(data)))
     }
+  }
+
+  const renderPackageLink = (packagename) => {
+    if (packageNameList.includes(packagename)) {
+      return <Link to={`/${packagename}`}>{packagename}</Link>
+    } else return <p>{packagename}</p>
   }
 
   const renderPackage = (packagename) => {
@@ -33,24 +41,41 @@ function App() {
         <h2>{packageObject.package}</h2>
         <h3>{packageObject.descriptionHeader}</h3>
         <p>{packageObject.descriptionDetails}</p>
-        <h3>Dependencies</h3>
-        <ul>
-          {packageObject.dependencyList.map(dependency => {
-            return (
-              <li key={dependency}>Juuh
-              <ul>
-                {dependency.map(alternative => {
-                  return(
-                    <li key={alternative}>
-                      {alternative}
+        { packageObject.dependencyList.length === 0 && <h3>No dependencies</h3> }
+        { packageObject.dependencyList.length !== 0 && <>
+          <h3>Dependencies</h3>
+          <ul>
+            {packageObject.dependencyList.map(dependency => {
+              return (
+                <div key={dependency}>
+                  {dependency.length === 1 && <li>{renderPackageLink(dependency[0])}</li>}
+                  {dependency.length !== 1 && <>
+                    <li>Any of the following:
+                      <ul>
+                        {dependency.map(alternative => {
+                          return(
+                            <li key={alternative}>
+                              {renderPackageLink(alternative)}
+                            </li>
+                          )
+                        })}
+                      </ul>
                     </li>
-                  )
-                })}
-              </ul>
-              </li>
-            )
-          })}
-        </ul>
+                  </>}
+                </div>
+              )
+            })}
+          </ul>
+        </>}
+        { packageObject.invDependencyList.length === 0 && <h3>No inverse dependencies</h3> }
+        { packageObject.invDependencyList.length !== 0 && <>
+          <h3>Inverse dependencies</h3>
+          <ul>
+            {packageObject.invDependencyList.map(dependency => {
+              return <li key = {dependency}>{renderPackageLink(dependency)}</li>
+            })}
+          </ul>
+        </>}
       </div>
     )
   }

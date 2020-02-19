@@ -31,7 +31,9 @@ const parseText = (textData) => {
       // Remove version numbers
       dependencyList = dependences[1].trim().replace(/\([^)]*\)/g,'').split(',')
       // List alternatives as an array
-      dependencyList = dependencyList.map(dependency => dependency.split('|').map(string => string.trim()))
+      dependencyList = dependencyList.map(dependency => [...new Set(dependency.split('|').map(string => string.trim()))])
+      // Drop duplicates (due to different versions)
+      dependencyList = Array.from(new Set(dependencyList.map(JSON.stringify)), JSON.parse)
     }
 
     // Collect everything into an object
@@ -42,6 +44,18 @@ const parseText = (textData) => {
       dependencyList: dependencyList
     }
   })
+
+  // Compute the inverse dependencies for each package
+  listOfPackageObjects.forEach(packageObject => {
+    let invDependencies = []
+    listOfPackageObjects.forEach(otherPackage => {
+      if (otherPackage.dependencyList.flat().includes(packageObject.package)) {
+        invDependencies.push(otherPackage.package)
+      }
+    })
+    packageObject.invDependencyList = invDependencies
+  })
+  
   return listOfPackageObjects
 }
 
