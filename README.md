@@ -5,7 +5,10 @@ My preassignment solution for applying to Reaktor.
 
 ## Description
 
-The complete assignment description can be found at https://www.reaktor.com/junior-dev-assignment/. I built a small webapp that allows user to browse information contained in Debian package control files. Namely, the file we are interwsted is ```/var/lib/dpkg/status``` on Debian and Ubuntu systems. The user can read their own file or use the example file provided in the assignment description. For each package, the user can read the description, list other packages the package depends on, as well as list all inverse dependencies (which other packages depend on the package).
+~~The complete assignment description can be found at https://www.reaktor.com/junior-dev-assignment/.~~ 
+UPDATE: The assignment has been changed to a newer one, and is no longer visible on Reaktor website (14.12.2020)
+
+I built a small webapp that allows user to browse information contained in Debian package control files. Namely, the file we are interwsted is ```/var/lib/dpkg/status``` on Debian and Ubuntu systems. The user can read their own file or use the example file provided in the assignment description. For each package, the user can read the description, list other packages the package depends on, as well as list all inverse dependencies (which other packages depend on the package).
 
 ## Implementation
 
